@@ -14,6 +14,7 @@ class ProductManagerTest {
     Product product2 = new Book(2, "The Dharma Bums", 390, "Jack Kerouac");
     Product product3 = new Smartphone(3, "3310", 5000, "Nokia");
     Product product4 = new Smartphone(4, "RAZR V3", 7000, "Motorolla");
+    Product product5 = new Smartphone(4, "L6", 6500, "Motorolla");
 
     ProductRepository repository = new ProductRepository();
     ProductManager manager = new ProductManager(repository);
@@ -24,6 +25,7 @@ class ProductManagerTest {
         manager.add(product2);
         manager.add(product3);
         manager.add(product4);
+        manager.add(product5);
     }
     @Test
     public void shouldSearchByNameBook() {
@@ -58,6 +60,13 @@ class ProductManagerTest {
     public void shouldSearchByAuthorFindNothing() {
         Product[] actual = manager.searchBy("Lev Tolstoy");
         Product[] expected = new Product[]{};
+        assertArrayEquals(actual, expected);
+    }
+
+    @Test
+    public void shouldSearchByManufactererTwoSameResults(){
+        Product[] actual = manager.searchBy("Motorolla");
+        Product[] expected = new Product[]{product4, product5};
         assertArrayEquals(actual, expected);
     }
 
